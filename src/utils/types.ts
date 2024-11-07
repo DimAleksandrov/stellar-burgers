@@ -1,3 +1,8 @@
+export type TConstructorItems = {
+  bun: Partial<TIngredient>;
+  ingredients: TIngredient[];
+};
+
 export type TIngredient = {
   _id: string;
   name: string;

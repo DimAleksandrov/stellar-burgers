@@ -19,6 +19,7 @@ import {
   TConstructorItems,
   TConstructorIngredient
 } from '@utils-types';
+import { v4 as uuidv4 } from 'uuid';
 
 type TInitialState = {
   ingredients: TIngredient[];
@@ -64,44 +65,30 @@ export const initialState: TInitialState = {
 
 export const fetchIngredients = createAsyncThunk(
   'ingredients/getAll',
-  async () => getIngredientsApi()
+  getIngredientsApi
 );
 
 export const fetchNewOrder = createAsyncThunk(
   'orders/newOrder',
-  async (data: string[]) => orderBurgerApi(data)
+  orderBurgerApi
 );
 
-export const fetchLoginUser = createAsyncThunk(
-  'user/login',
-  async (data: TLoginData) => loginUserApi(data)
-);
+export const fetchLoginUser = createAsyncThunk('user/login', loginUserApi);
 
 export const fetchRegisterUser = createAsyncThunk(
   'user/register',
-  async (data: TRegisterData) => registerUserApi(data)
+  registerUserApi
 );
 
-export const fetchFeed = createAsyncThunk('user/feed', async () =>
-  getFeedsApi()
-);
+export const fetchFeed = createAsyncThunk('user/feed', getFeedsApi);
 
-export const getUserThunk = createAsyncThunk('user/get', async () =>
-  getUserApi()
-);
+export const getUserThunk = createAsyncThunk('user/get', getUserApi);
 
-export const fetchUpdateUser = createAsyncThunk(
-  'user/update',
-  async (user: Partial<TRegisterData>) => updateUserApi(user)
-);
+export const fetchUpdateUser = createAsyncThunk('user/update', updateUserApi);
 
-export const fetchLogout = createAsyncThunk('user/logout', async () =>
-  logoutApi()
-);
+export const fetchLogout = createAsyncThunk('user/logout', logoutApi);
 
-export const fetchUserOrders = createAsyncThunk('user/orders', async () =>
-  getOrdersApi()
-);
+export const fetchUserOrders = createAsyncThunk('user/orders', getOrdersApi);
 
 const slice = createSlice({
   name: 'stellarBurger',
@@ -112,7 +99,8 @@ const slice = createSlice({
         state.constructorItems.bun = action.payload;
       } else {
         state.constructorItems.ingredients.push({
-          ...action.payload
+          ...action.payload,
+          uniqueId: uuidv4()
         });
       }
     },
@@ -127,7 +115,7 @@ const slice = createSlice({
     },
     moveIngredientUp(state, action: PayloadAction<TConstructorIngredient>) {
       const ingredientIndex = state.constructorItems.ingredients.findIndex(
-        (item) => item._id === action.payload._id
+        (item) => item.uniqueId === action.payload.uniqueId
       );
       const prevItem = state.constructorItems.ingredients[ingredientIndex - 1];
       state.constructorItems.ingredients.splice(
@@ -139,7 +127,7 @@ const slice = createSlice({
     },
     moveIngredientDown(state, action: PayloadAction<TConstructorIngredient>) {
       const ingredientIndex = state.constructorItems.ingredients.findIndex(
-        (item) => item._id === action.payload._id
+        (item) => item.uniqueId === action.payload.uniqueId
       );
       const nextItem = state.constructorItems.ingredients[ingredientIndex + 1];
       state.constructorItems.ingredients.splice(
@@ -151,7 +139,7 @@ const slice = createSlice({
     },
     deleteIngredient(state, action: PayloadAction<TConstructorIngredient>) {
       const ingredientIndex = state.constructorItems.ingredients.findIndex(
-        (item) => item._id === action.payload._id
+        (item) => item.uniqueId === action.payload.uniqueId
       );
       state.constructorItems.ingredients =
         state.constructorItems.ingredients.filter(

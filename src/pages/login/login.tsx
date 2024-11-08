@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { Preloader } from '@ui';
-import { useDispatch, useSelector } from '../../../src/services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import {
   fetchLoginUser,
   fetchUpdateUser,

@@ -8,8 +8,8 @@ import {
   selectErrorText,
   selectLoading
 } from '@slices';
-import { useDispatch, useSelector } from '../../../src/services/store';
-import { setCookie } from '../../../src/utils/cookie';
+import { useDispatch, useSelector } from '../../services/store';
+import { setCookie } from '../../utils/cookie';
 
 export const Register: FC = () => {
   const dispatch = useDispatch();

@@ -9,9 +9,8 @@ import {
 } from '@zlden/react-developer-burger-ui-components';
 
 import { TBurgerIngredientUIProps } from './type';
-import { useDispatch } from '../../../services/store';
+import { useDispatch, useSelector } from '../../../services/store';
 import { openModal } from '@slices';
-import { useSelector } from 'react-redux';
 
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {

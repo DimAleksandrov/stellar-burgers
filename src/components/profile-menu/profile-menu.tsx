@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { redirect, useLocation } from 'react-router-dom';
 import { ProfileMenuUI } from '@ui';
-import { useDispatch } from '../../../src/services/store';
-import { deleteCookie } from '../../../src/utils/cookie';
+import { useDispatch } from '../../services/store';
+import { deleteCookie } from '../../utils/cookie';
 import { fetchLogout } from '@slices';
 
 export const ProfileMenu: FC = () => {

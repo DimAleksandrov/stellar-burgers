@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import slice from '../../src/services/slices';
+import slice from '../services/slices';
 
 import {
   TypedUseSelectorHook,

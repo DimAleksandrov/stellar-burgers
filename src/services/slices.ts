@@ -17,7 +17,8 @@ import {
   TOrder,
   TUser,
   TConstructorItems,
-  TConstructorIngredient
+  TConstructorIngredient,
+  TIngredientUnique
 } from '@utils-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -94,14 +95,16 @@ const slice = createSlice({
   name: 'stellarBurger',
   initialState,
   reducers: {
-    addIngredient(state, action: PayloadAction<TIngredient>) {
-      if (action.payload.type === 'bun') {
-        state.constructorItems.bun = action.payload;
-      } else {
-        state.constructorItems.ingredients.push({
-          ...action.payload,
-          uniqueId: uuidv4()
-        });
+    addIngredient: {
+      prepare: (ingredient: TIngredient) => ({
+        payload: { ...ingredient, uniqueId: uuidv4() }
+      }),
+      reducer: (state, action: PayloadAction<TIngredientUnique>) => {
+        if (action.payload.type === 'bun') {
+          state.constructorItems.bun = action.payload;
+        } else {
+          state.constructorItems.ingredients.push(action.payload);
+        }
       }
     },
     openModal(state) {
